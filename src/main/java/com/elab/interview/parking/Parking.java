@@ -2,16 +2,27 @@ package com.elab.interview.parking;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.Map;
+
 /**
  * Handles the parking mechanisms: park/unpark a car (also for disabled-only bays) and provides a string representation of its state.
  */
 public class Parking {
 
+    private Map<Integer, Character> parkingMap;
+
+    public Parking(Map<Integer, Character> parkingMap) {
+        this.parkingMap = parkingMap;
+    }
+
     /**
      * @return the number of available parking bays left
      */
     public int getAvailableBays() {
-        throw new NotImplementedException("TODO");
+        return (int) parkingMap.values()
+                .stream()
+                .filter(character -> character == 'U' | character == '@')
+                .count();
     }
 
     /**
@@ -40,11 +51,11 @@ public class Parking {
     /**
      * Print a 2-dimensional representation of the parking with the following rules:
      * <ul>
-     * <li>'=' is a pedestrian exit
-     * <li>'@' is a disabled-only empty bay
-     * <li>'U' is a non-disabled empty bay
-     * <li>'D' is a disabled-only occupied bay
-     * <li>the char representation of a parked vehicle for non-empty bays.
+         * <li>'=' is a pedestrian exit
+         * <li>'@' is a disabled-only empty bay
+         * <li>'U' is a non-disabled empty bay
+         * <li>'D' is a disabled-only occupied bay
+         * <li>the char representation of a parked vehicle for non-empty bays.
      * </ul>
      * U, D, @ and = can be considered as reserved chars.
      *

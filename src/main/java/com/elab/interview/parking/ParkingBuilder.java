@@ -2,24 +2,42 @@ package com.elab.interview.parking;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Builder class to get a parking instance
  */
 public class ParkingBuilder {
 
+    private Integer maxSize;
+    private Map<Integer, Character> parkingMap;
+
     public ParkingBuilder withSquareSize(final int size) {
-        throw new NotImplementedException("TODO");
+        maxSize = size * size;
+        HashMap<Integer, Character> pm = new HashMap<>();
+        for (int i = 0; i < maxSize; i++) {
+            pm.put(i, 'U');
+        }
+        parkingMap = pm;
+        return this;
     }
 
     public ParkingBuilder withPedestrianExit(final int pedestrianExitIndex) {
-        throw new NotImplementedException("TODO");
+        if (pedestrianExitIndex < maxSize) {
+            parkingMap.put(pedestrianExitIndex, '=');
+        }
+        return this;
     }
 
     public ParkingBuilder withDisabledBay(final int disabledBayIndex) {
-        throw new NotImplementedException("TODO");
+        if (disabledBayIndex < maxSize) {
+            parkingMap.put(disabledBayIndex, '@');
+        }
+        return this;
     }
 
-    public Parking build() {
-        throw new NotImplementedException("TODO");
+    public Parking build() { // rirona una istanza di Parking
+        return new Parking(parkingMap);
     }
 }

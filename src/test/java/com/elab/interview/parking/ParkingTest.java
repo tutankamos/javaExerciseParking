@@ -13,8 +13,13 @@ public class ParkingTest {
 
     @Before
     public void setUp() {
-        parking = new ParkingBuilder().withSquareSize(5).withPedestrianExit(FIRSTUPEDESTRIANUEXITUINDEX).withPedestrianExit(12).withDisabledBay(5)
-            .withDisabledBay(10).build();
+        parking = new ParkingBuilder()
+                .withSquareSize(5)
+                .withPedestrianExit(FIRSTUPEDESTRIANUEXITUINDEX)
+                .withPedestrianExit(12)
+                .withDisabledBay(5)
+                .withDisabledBay(10)
+                .build();
     }
 
     @Test
