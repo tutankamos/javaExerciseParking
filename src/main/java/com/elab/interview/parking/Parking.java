@@ -2,6 +2,8 @@ package com.elab.interview.parking;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,19 +11,27 @@ import java.util.Map;
  */
 public class Parking {
 
-    private Map<Integer, Character> parkingMap;
+    private int squareSize;
+    private List<Place> parkingPlaces;
 
-    public Parking(Map<Integer, Character> parkingMap) {
-        this.parkingMap = parkingMap;
+    // todo cercare di impedire l'istanziazione di questa classe se non tramite il builder
+    public Parking(Map<Integer, Character> parkingMap, int squareSize) {
+        parkingPlaces = new ArrayList<>();
+        squareSize = this.squareSize;
+        parkingMap.forEach((key, value) -> parkingPlaces.add(new Place(key, value)));
+        // todo logica per calcolare la distanza tra i posti e l'uscita pedonale
     }
 
     /**
      * @return the number of available parking bays left
      */
     public int getAvailableBays() {
-        return (int) parkingMap.values()
+        return (int) parkingPlaces
                 .stream()
-                .filter(character -> character == 'U' | character == '@')
+                .filter(place -> {
+                    Character info = place.getInfo();
+                    return  info == 'U' | info == '@';
+                })
                 .count();
     }
 

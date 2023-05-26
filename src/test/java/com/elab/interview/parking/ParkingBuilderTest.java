@@ -36,11 +36,11 @@ public class ParkingBuilderTest {
     public void testBuildParkingWithPedestrianExitsAndDisabledSlots() {
         final Parking parking = new ParkingBuilder()
                 .withSquareSize(10)
-                .withPedestrianExit(8) //
-                .withPedestrianExit(42) //
-                .withPedestrianExit(85) //
-                .withDisabledBay(2) //
-                .withDisabledBay(47) //
+                .withPedestrianExit(8)
+                .withPedestrianExit(42)
+                .withPedestrianExit(85)
+                .withDisabledBay(2)
+                .withDisabledBay(47)
                 .withDisabledBay(72)
                 .build();
         assertEquals(97, parking.getAvailableBays());

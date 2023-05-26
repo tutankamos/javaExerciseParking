@@ -2,7 +2,9 @@ package com.elab.interview.parking;
 
 import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,10 +12,12 @@ import java.util.Map;
  */
 public class ParkingBuilder {
 
-    private Integer maxSize;
+    private int squareSize;
+    private int maxSize;
     private Map<Integer, Character> parkingMap;
 
     public ParkingBuilder withSquareSize(final int size) {
+        squareSize = size;
         maxSize = size * size;
         HashMap<Integer, Character> pm = new HashMap<>();
         for (int i = 0; i < maxSize; i++) {
@@ -38,6 +42,6 @@ public class ParkingBuilder {
     }
 
     public Parking build() { // rirona una istanza di Parking
-        return new Parking(parkingMap);
+        return new Parking(parkingMap, squareSize);
     }
 }
