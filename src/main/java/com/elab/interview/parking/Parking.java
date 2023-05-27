@@ -5,21 +5,18 @@ import org.apache.commons.lang3.NotImplementedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Handles the parking mechanisms: park/unpark a car (also for disabled-only bays) and provides a string representation of its state.
  */
-public class Parking {
+class Parking {
 
-    private int squareSize;
-    private List<Place> parkingPlaces;
+    private final List<Place> parkingPlaces;
 
-    // todo cercare di impedire l'istanziazione di questa classe se non tramite il builder
-    public Parking(Map<Integer, Character> parkingMap, int squareSize) {
-        parkingPlaces = new ArrayList<>();
-        squareSize = this.squareSize;
-        parkingMap.forEach((key, value) -> parkingPlaces.add(new Place(key, value)));
-        // todo logica per calcolare la distanza tra i posti e l'uscita pedonale
+    // todo cercare di impedire l'istanziazione di questa classe se non tramite il builder, forse basta mettere la classe come non pubblica, cosi la possono vedere solo nel pacchetto
+    public Parking(List<Place> parkingPlaces) {
+        this.parkingPlaces = parkingPlaces;
     }
 
     /**
@@ -30,7 +27,7 @@ public class Parking {
                 .stream()
                 .filter(place -> {
                     Character info = place.getInfo();
-                    return  info == 'U' | info == '@';
+                    return info == 'U' | info == '@';
                 })
                 .count();
     }
@@ -39,9 +36,7 @@ public class Parking {
      * Park the car of the given type ('D' being dedicated to disabled people) in closest -to pedestrian exit- and first (starting from the parking's entrance)
      * available bay. Disabled people can only park on dedicated bays.
      *
-     *
-     * @param carType
-     *            the car char representation that has to be parked
+     * @param carType the car char representation that has to be parked
      * @return bay index of the parked car, -1 if no applicable bay found
      */
     public int parkCar(final char carType) {
@@ -61,14 +56,14 @@ public class Parking {
     /**
      * Print a 2-dimensional representation of the parking with the following rules:
      * <ul>
-         * <li>'=' is a pedestrian exit
-         * <li>'@' is a disabled-only empty bay
-         * <li>'U' is a non-disabled empty bay
-         * <li>'D' is a disabled-only occupied bay
-         * <li>the char representation of a parked vehicle for non-empty bays.
+     * <li>'=' is a pedestrian exit
+     * <li>'@' is a disabled-only empty bay
+     * <li>'U' is a non-disabled empty bay
+     * <li>'D' is a disabled-only occupied bay
+     * <li>the char representation of a parked vehicle for non-empty bays.
      * </ul>
      * U, D, @ and = can be considered as reserved chars.
-     *
+     * <p>
      * Once an end of lane is reached, then the next lane is reversed (to represent the fact that cars need to turn around)
      *
      * @return the string representation of the parking as a 2-dimensional square. Note that cars do a U turn to continue to the next lane.
@@ -77,5 +72,4 @@ public class Parking {
     public String toString() {
         throw new NotImplementedException("TODO");
     }
-
 }

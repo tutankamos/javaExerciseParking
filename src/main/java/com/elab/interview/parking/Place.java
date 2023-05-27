@@ -1,9 +1,9 @@
 package com.elab.interview.parking;
 
 public class Place {
-    private final int poszionInParking;
+    private final int poszionInParking; // potrebbe non essere essenziale
     private Character info;
-    private int distancePedestrianExit;
+    private int distancePedestrianExit = 0;
 
     public Place(int poszionInParking, Character info) {
         this.poszionInParking = poszionInParking;
@@ -16,7 +16,6 @@ public class Place {
     }
 
     // GET AND SETTERS
-
 
     public int getDistancePedestrianExit() {
         return distancePedestrianExit;
