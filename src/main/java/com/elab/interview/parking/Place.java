@@ -1,7 +1,7 @@
 package com.elab.interview.parking;
 
 public class Place {
-    private final int poszionInParking; // potrebbe non essere essenziale
+    private final int poszionInParking;
     private Character info;
     private int distancePedestrianExit = 0;
 
@@ -13,6 +13,14 @@ public class Place {
     // METHODS
     boolean isPedestrianExit() {
         return info.equals('=');
+    }
+
+    boolean isFreeDisabledBay(){
+        return info.equals('@');
+    }
+
+    boolean isFreeNormalBay(){
+        return info.equals('U');
     }
 
     // GET AND SETTERS

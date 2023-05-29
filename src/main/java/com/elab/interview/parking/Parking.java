@@ -2,9 +2,7 @@ package com.elab.interview.parking;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +38,41 @@ class Parking {
      * @return bay index of the parked car, -1 if no applicable bay found
      */
     public int parkCar(final char carType) {
-        throw new NotImplementedException("TODO");
+        int result;
+        List<Place> places;
+
+        if (carType == 'D') {
+            places = parkingPlaces
+                    .stream()
+                    .filter(Place::isFreeDisabledBay)
+                    .collect(Collectors.toList());
+        } else {
+            places = parkingPlaces
+                    .stream()
+                    .filter(Place::isFreeNormalBay)
+                    .collect(Collectors.toList());
+        }
+
+        if (places.isEmpty()) {
+            result = -1;
+        } else {
+            int minDistancePedestrianExit = Collections.min(places
+                    .stream()
+                    .map(Place::getDistancePedestrianExit)
+                    .collect(Collectors.toList()));
+
+            Place bestPlace = places.stream()
+                    .filter(p -> {
+                        return p.getDistancePedestrianExit() == minDistancePedestrianExit;
+                    })
+                    .collect(Collectors.toList())
+                    .get(0);
+
+            bestPlace.setInfo(carType);
+            result = bestPlace.getPoszionInParking();
+        }
+
+        return result;
     }
 
     /**
@@ -50,7 +82,15 @@ class Parking {
      * @return true if a car was parked in the bay, false otherwise
      */
     public boolean unparkCar(final int index) {
-        throw new NotImplementedException("TODO");
+        Place place = parkingPlaces.get(index); //todo check for outofbound exception
+        if (place.getInfo() == '=' | place.getInfo() == '@' | place.getInfo() == 'U') {
+            return false;
+        } else if (place.getInfo() == 'D') {
+            place.setInfo('@');
+        } else {
+            place.setInfo('U');
+        }
+        return true;
     }
 
     /**
@@ -70,6 +110,25 @@ class Parking {
      */
     @Override
     public String toString() {
-        throw new NotImplementedException("TODO");
+        StringBuilder stringOfResult = new StringBuilder();
+
+        parkingPlaces.forEach(place -> {
+            stringOfResult.append(place.getInfo());
+        });
+
+        StringBuilder result = new StringBuilder();
+        int squareSize = (int) Math.sqrt(parkingPlaces.size());
+        for (int i = 0; i < squareSize; i++) {
+            if (i % 2 == 0) {
+                result.append(stringOfResult.substring(i * squareSize, i * squareSize + squareSize -1));
+                result.append('\n');
+            } else {
+                String s = new StringBuilder(stringOfResult.substring(i * 4, i * 4 + 3)).reverse().toString();
+                result.append(s);
+                result.append('\n');
+            }
+        }
+        result.delete(result.length() - 2, result.length());
+        return result.toString();
     }
 }
