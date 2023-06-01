@@ -25,7 +25,7 @@ class Parking {
                 .stream()
                 .filter(place -> {
                     Character info = place.getInfo();
-                    return info == 'U' | info == '@';
+                    return info == 'U' || info == '@';
                 })
                 .count();
     }
@@ -82,8 +82,12 @@ class Parking {
      * @return true if a car was parked in the bay, false otherwise
      */
     public boolean unparkCar(final int index) {
-        Place place = parkingPlaces.get(index); //todo check for outofbound exception
-        if (place.getInfo() == '=' | place.getInfo() == '@' | place.getInfo() == 'U') {
+        if (index > parkingPlaces.size()) {
+            return false;
+        }
+
+        Place place = parkingPlaces.get(index);
+        if (place.getInfo() == '=' || place.getInfo() == '@' || place.getInfo() == 'U') {
             return false;
         } else if (place.getInfo() == 'D') {
             place.setInfo('@');
@@ -120,7 +124,7 @@ class Parking {
         int squareSize = (int) Math.sqrt(parkingPlaces.size());
         for (int i = 0; i < squareSize; i++) {
             if (i % 2 == 0) {
-                result.append(stringOfResult.substring(i * squareSize, i * squareSize + squareSize -1));
+                result.append(stringOfResult.substring(i * squareSize, i * squareSize + squareSize - 1));
                 result.append('\n');
             } else {
                 String s = new StringBuilder(stringOfResult.substring(i * 4, i * 4 + 3)).reverse().toString();

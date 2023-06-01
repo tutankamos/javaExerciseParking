@@ -28,7 +28,7 @@ public class ParkingBuilder {
     }
 
     public ParkingBuilder withPedestrianExit(final int pedestrianExitIndex) {
-        if (pedestrianExitIndex < maxSize & parkingPlaces.size() > 0) {
+        if (pedestrianExitIndex < maxSize && parkingPlaces.size() > 0) {
             parkingPlaces.get(pedestrianExitIndex).setInfo('=');
             exitPositionIndexes.add(pedestrianExitIndex);
         }
@@ -36,7 +36,7 @@ public class ParkingBuilder {
     }
 
     public ParkingBuilder withDisabledBay(final int disabledBayIndex) {
-        if (disabledBayIndex < maxSize & parkingPlaces.size() > 0) {
+        if (disabledBayIndex < maxSize && parkingPlaces.size() > 0) {
             parkingPlaces.get(disabledBayIndex).setInfo('@');
         }
         return this;
@@ -74,7 +74,7 @@ public class ParkingBuilder {
                 counter = 1;
                 i--;
             } else {
-                if (parkingPlaces.get(i).getDistancePedestrianExit() > counter | parkingPlaces.get(i).getDistancePedestrianExit() == 0) {
+                if (parkingPlaces.get(i).getDistancePedestrianExit() > counter || parkingPlaces.get(i).getDistancePedestrianExit() == 0) {
                     parkingPlaces.get(i).setDistancePedestrianExit(counter);
                     counter++;
                 }
