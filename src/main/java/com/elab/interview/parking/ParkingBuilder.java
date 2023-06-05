@@ -10,13 +10,12 @@ import java.util.stream.Collectors;
  */
 public class ParkingBuilder {
 
-    private final Parking parking;
     private final List<Place> parkingPlaces = new ArrayList<>();
+    private final Parking parking  = new ParkingImpl(parkingPlaces);
     private final List<Integer> exitPositionIndexes = new ArrayList<>();
     private int maxSize;
 
     public ParkingBuilder() {
-        parking = new ParkingImpl(parkingPlaces);
     }
 
     public ParkingBuilder withSquareSize(final int size) {
@@ -51,10 +50,6 @@ public class ParkingBuilder {
     }
 
     void calculateDistancePedestrianExit(List<Place> parkingPlaces) {
-        // 0 1 2 3 4 5 6 7
-        // 0 0 = 0 0 0 0 0
-        // 1 2 = 1 2 3 4 5
-        // 2 1 = 1 2 3 4 5
         int counter = 1;
         int i = exitPositionIndexes.get(0);
         while (i < parkingPlaces.size()) {
@@ -68,7 +63,7 @@ public class ParkingBuilder {
             }
         }
         counter = 1;
-        i = exitPositionIndexes.get(exitPositionIndexes.size() - 1);
+        i--;
         while (i >= 0) {
             if (parkingPlaces.get(i).isPedestrianExit()) {
                 counter = 1;
