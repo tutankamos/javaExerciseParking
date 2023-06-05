@@ -16,7 +16,7 @@ public class ParkingBuilder {
     private int maxSize;
 
     public ParkingBuilder() {
-        parking = new Parking(parkingPlaces);
+        parking = new ParkingImpl(parkingPlaces);
     }
 
     public ParkingBuilder withSquareSize(final int size) {
